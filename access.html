@@ -38,13 +38,16 @@ button{width:100%;margin-top:12px;padding:17px;border:0;border-radius:16px;backg
 .path-card{border:1px solid var(--line);border-radius:22px;background:#0b1017;overflow:hidden;margin:16px auto;max-width:520px;text-align:left}
 .path-card img{width:100%;height:170px;object-fit:cover;display:block;filter:brightness(.75) contrast(1.15)}
 .path-body{padding:22px}.path-body h3{margin:0;letter-spacing:.18em;font-size:27px}.path-body p{color:#aeb6c2;font-size:18px}.keep{color:#ff4343}.lost{color:#4bd8d1}.hunted{color:#ff8a28}
+.flash{position:fixed;inset:0;background:white;opacity:0;z-index:99;pointer-events:none}
+.flash.on{animation:flash .38s ease-out}
+@keyframes flash{0%{opacity:0}8%{opacity:.92}20%{opacity:.08}32%{opacity:.70}100%{opacity:0}}
 .footer{color:#7d8794;text-align:center;font-size:12px;letter-spacing:.18em;padding:28px 18px 50px}
 </style></head>
 <body>
 <div class="noise"></div>
 <div class="homebar"><a href="index.html">HOME</a><a href="paths.html">PATHS</a></div>
 <audio id="ambient" src="rain_wind.wav" loop preload="auto"></audio>
-<audio id="unlockSound" src="unlock.wav" preload="auto"></audio>
+<audio id="signal" src="signal_click.wav" preload="auto"></audio>
 <audio id="deniedSound" src="denied.wav" preload="auto"></audio>
 <section class="page">
   <div class="inner">
@@ -62,7 +65,18 @@ button{width:100%;margin-top:12px;padding:17px;border:0;border-radius:16px;backg
 </section>
 <script>
 const ambient=document.getElementById("ambient");
-document.getElementById("soundBtn").addEventListener("click",()=>{ambient.volume=.30;ambient.play().catch(()=>{});document.getElementById("soundBtn").textContent="SOUND: ON";});
+function startAmb(){ambient.volume=.26;ambient.play().catch(()=>{});document.getElementById("soundBtn").textContent="SOUND: ON";}
+document.getElementById("soundBtn").addEventListener("click",startAmb);
+
+function speakWelcome(){
+ if(!("speechSynthesis" in window)) return;
+ const phrase="Benvenuto nel segnale. Da questo momento, ogni scelta verrà ricordata.";
+ const u=new SpeechSynthesisUtterance(phrase);
+ u.lang="it-IT"; u.rate=.82; u.pitch=.72; u.volume=.88;
+ setTimeout(()=>speechSynthesis.speak(u),650);
+}
+if(new URLSearchParams(location.search).get("voice")==="1"){ startAmb(); speakWelcome(); }
+
 document.getElementById("unlockBtn").addEventListener("click", unlock);
 function unlock(){
  const code=document.getElementById("code").value.trim().toUpperCase();
@@ -75,14 +89,14 @@ function unlock(){
    log.textContent="> signal rejected\n> identity not recognized\n> try again";
    return;
  }
- document.getElementById("unlockSound").volume=.45;document.getElementById("unlockSound").play().catch(()=>{});
+ const s=document.getElementById("signal"); s.volume=.48; s.play().catch(()=>{});
  out.innerHTML="DECRYPTING...";
  log.style.display="block";
  log.textContent="> signal accepted\n> opening hidden layer\n> locating three symbols";
  setTimeout(()=>{log.textContent+="\n> key fragment found"},700);
  setTimeout(()=>{log.textContent+="\n> book fragment found"},1300);
  setTimeout(()=>{log.textContent+="\n> ring fragment found"},1900);
- setTimeout(()=>{out.innerHTML="ACCESS GRANTED.";log.textContent+="\n> choose carefully"; setTimeout(()=>location.href="paths.html",700);},2600);
+ setTimeout(()=>{out.innerHTML="ACCESS GRANTED.";log.textContent+="\n> choose carefully"; setTimeout(()=>location.href="paths.html?storm=1",700);},2600);
 }
 </script>
 </body></html>
