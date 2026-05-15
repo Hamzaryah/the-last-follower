@@ -1,49 +1,105 @@
 <!doctype html>
-<html lang="en">
+<html lang="it">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>THE LAST FOLLOWER</title>
 <style>
+*{box-sizing:border-box}
 html,body{
-margin:0;
-padding:0;
-background:#000;
-height:100%;
-overflow:hidden;
-font-family:Arial,sans-serif;
+  margin:0;
+  background:#020406;
+  color:#fff;
+  font-family:Arial, Helvetica, sans-serif;
 }
-.hero{
-position:relative;
-width:100%;
-height:100vh;
-background:url('landing.png') center center / cover no-repeat;
+body{
+  min-height:100vh;
+  overflow-x:hidden;
 }
-.overlay{
-position:absolute;
-inset:0;
-background:linear-gradient(to bottom, rgba(0,0,0,.15), rgba(0,0,0,.35));
+.stage{
+  position:relative;
+  width:100%;
+  min-height:100vh;
+  background:#020406;
 }
-.enter{
-position:absolute;
-left:50%;
-transform:translateX(-50%);
-bottom:7%;
-padding:18px 36px;
-border-radius:18px;
-background:rgba(0,0,0,.55);
-border:1px solid rgba(255,255,255,.18);
-color:#fff;
-font-size:20px;
-font-weight:800;
-backdrop-filter:blur(8px);
+.poster{
+  display:block;
+  width:100%;
+  height:auto;
+  min-height:100vh;
+  object-fit:cover;
+  object-position:top center;
+}
+.signal{
+  position:fixed;
+  left:50%;
+  bottom:calc(22px + env(safe-area-inset-bottom));
+  transform:translateX(-50%);
+  width:min(86vw,420px);
+  padding:17px 22px;
+  border-radius:18px;
+  border:1px solid rgba(255,55,55,.72);
+  background:rgba(7,9,13,.72);
+  color:#fff;
+  text-align:center;
+  text-decoration:none;
+  letter-spacing:.18em;
+  font-weight:900;
+  font-size:14px;
+  backdrop-filter:blur(10px);
+  box-shadow:0 0 28px rgba(255,30,30,.28);
+}
+.signal span{color:#ff3636}
+.fade{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  height:130px;
+  pointer-events:none;
+  background:linear-gradient(to top,#020406,rgba(2,4,6,0));
+}
+@media(min-width:900px){
+  body{display:flex;justify-content:center}
+  .stage{max-width:520px}
+  .signal{max-width:380px}
 }
 </style>
 </head>
 <body>
-<div class="hero">
-<div class="overlay"></div>
-<div class="enter">SIGNAL CONNECTED</div>
-</div>
+<main class="stage">
+  <img class="poster" src="landing.png" alt="The Last Follower landing">
+  <div class="fade"></div>
+  <a class="signal" href="#signal">ENTER <span>THE SIGNAL</span></a>
+</main>
+
+<script>
+document.querySelector('.signal').addEventListener('click', function(e){
+  e.preventDefault();
+  document.body.innerHTML = `
+  <div style="min-height:100vh;background:#020406;color:white;font-family:Arial;padding:32px;display:flex;align-items:center;justify-content:center;text-align:center">
+    <div>
+      <div style="color:#ff3636;letter-spacing:.25em;font-weight:900;margin-bottom:20px">SIGNAL_01</div>
+      <h1 style="font-size:52px;line-height:.92;margin:0 0 20px">THREE SYMBOLS.<br>ONE TRUTH.</h1>
+      <p style="color:#b8bfca;font-size:20px;line-height:1.55">Una scatola. Tre simboli. Una scelta. Il primo accesso richiede un codice.</p>
+      <div style="margin-top:28px;padding:18px;border:1px solid rgba(255,255,255,.14);border-radius:18px;background:#10151c">
+        <input id="code" placeholder="ENTER ACCESS CODE" style="width:100%;padding:16px;border-radius:14px;border:0;font-size:16px;text-align:center;letter-spacing:.18em;background:#fff;color:#111">
+        <button onclick="checkCode()" style="width:100%;margin-top:12px;padding:16px;border-radius:14px;border:0;background:#ff3636;color:#fff;font-weight:900;letter-spacing:.12em">UNLOCK</button>
+        <div id="out" style="margin-top:14px;color:#e7c27b"></div>
+      </div>
+    </div>
+  </div>`;
+});
+
+function checkCode(){
+  const code = document.getElementById('code').value.trim().toUpperCase();
+  const out = document.getElementById('out');
+  if(code === 'SIGNAL01' || code === 'SIGNAL_01'){
+    out.innerHTML = 'ACCESS GRANTED. The first path is opening...';
+  } else {
+    out.innerHTML = 'ACCESS DENIED. The signal does not recognize you.';
+  }
+}
+</script>
 </body>
 </html>
