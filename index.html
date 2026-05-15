@@ -3,102 +3,133 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>THE LAST FOLLOWER</title>
+<title>THE LAST FOLLOWER — SIGNAL_01</title>
 <style>
 *{box-sizing:border-box}
-html,body{
-  margin:0;
-  background:#020406;
-  color:#fff;
-  font-family:Arial, Helvetica, sans-serif;
-}
-body{
-  min-height:100vh;
-  overflow-x:hidden;
-}
-.stage{
-  position:relative;
-  width:100%;
-  min-height:100vh;
-  background:#020406;
-}
-.poster{
-  display:block;
-  width:100%;
-  height:auto;
-  min-height:100vh;
-  object-fit:cover;
-  object-position:top center;
-}
-.signal{
-  position:fixed;
-  left:50%;
-  bottom:calc(22px + env(safe-area-inset-bottom));
-  transform:translateX(-50%);
-  width:min(86vw,420px);
-  padding:17px 22px;
-  border-radius:18px;
-  border:1px solid rgba(255,55,55,.72);
-  background:rgba(7,9,13,.72);
-  color:#fff;
-  text-align:center;
-  text-decoration:none;
-  letter-spacing:.18em;
-  font-weight:900;
-  font-size:14px;
-  backdrop-filter:blur(10px);
-  box-shadow:0 0 28px rgba(255,30,30,.28);
-}
-.signal span{color:#ff3636}
-.fade{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  height:130px;
-  pointer-events:none;
-  background:linear-gradient(to top,#020406,rgba(2,4,6,0));
-}
-@media(min-width:900px){
-  body{display:flex;justify-content:center}
-  .stage{max-width:520px}
-  .signal{max-width:380px}
-}
+:root{--bg:#020406;--red:#ff3434;--gold:#e7c27b;--muted:#aeb6c2;--line:rgba(255,255,255,.14)}
+html,body{margin:0;background:var(--bg);color:#fff;font-family:Arial,Helvetica,sans-serif;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:20;pointer-events:none;background:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px);background-size:100% 4px;mix-blend-mode:overlay;opacity:.28}
+.noise{position:fixed;inset:-20%;z-index:21;pointer-events:none;opacity:.055;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:noiseMove .9s steps(2) infinite}
+@keyframes noiseMove{0%{transform:translate(0,0)}50%{transform:translate(-3%,2%)}100%{transform:translate(1%,-2%)}}
+.hero{min-height:100vh;position:relative;display:flex;align-items:flex-end;justify-content:center;padding:22px 18px calc(34px + env(safe-area-inset-bottom));overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:url("landing.png") top center/cover no-repeat;opacity:.74;transform:scale(1.04)}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 34%,rgba(255,255,255,.07),transparent 26%),linear-gradient(to bottom,rgba(2,4,6,.08),rgba(2,4,6,.72) 58%,#020406 100%)}
+.topbar{position:absolute;top:18px;left:18px;right:18px;z-index:2;display:flex;justify-content:space-between;align-items:center;letter-spacing:.32em;font-size:11px;color:#dce2ea}
+.content{position:relative;z-index:2;width:100%;max-width:560px;text-align:center;padding-top:40vh}
+.time{color:#e6edf6;letter-spacing:.25em;font-size:13px;margin-bottom:10px}
+.status{color:#fff;letter-spacing:.20em;font-size:12px;margin-bottom:40px}.status span{color:var(--red)}
+h1{margin:0;font-size:clamp(52px,17vw,96px);line-height:.86;letter-spacing:.02em;font-weight:900;text-shadow:0 0 22px rgba(255,255,255,.22);animation:breath 4.8s ease-in-out infinite}
+@keyframes breath{0%,100%{filter:brightness(1)}50%{filter:brightness(1.16)}}
+.glitch{position:relative}.glitch::before,.glitch::after{content:attr(data-text);position:absolute;inset:0;opacity:0;pointer-events:none}.glitch::before{color:#ff3333;transform:translate(2px,0)}.glitch::after{color:#3ee7ff;transform:translate(-2px,0)}
+.glitch.active::before,.glitch.active::after{opacity:.65;animation:glitchShift .22s steps(2) 1}
+@keyframes glitchShift{0%{clip-path:inset(0 0 80% 0)}33%{clip-path:inset(35% 0 40% 0)}66%{clip-path:inset(70% 0 0 0)}100%{clip-path:inset(0 0 0 0)}}
+.tagline{letter-spacing:.35em;color:#e9edf3;font-size:12px;margin:22px 0 28px}.tagline span{color:var(--red)}
+.enter{width:100%;padding:18px 20px;border-radius:16px;border:1px solid rgba(255,52,52,.85);background:rgba(8,10,14,.72);color:#fff;font-weight:900;font-size:14px;letter-spacing:.22em;box-shadow:0 0 32px rgba(255,52,52,.25);backdrop-filter:blur(8px);animation:pulseRed 2.2s infinite}
+@keyframes pulseRed{0%,100%{box-shadow:0 0 22px rgba(255,52,52,.22)}50%{box-shadow:0 0 44px rgba(255,52,52,.55)}}
+.sound{margin-top:12px;background:transparent;border:0;color:#8d97a4;letter-spacing:.22em;font-size:10px}
+.scroll{margin-top:18px;color:#8d97a4;letter-spacing:.25em;font-size:10px}
+.panel{min-height:100vh;padding:68px 20px 40px;display:none;align-items:center;justify-content:center;text-align:center}.panel.active{display:flex}.panel-inner{max-width:560px;width:100%}
+.kicker{color:var(--red);letter-spacing:.35em;font-weight:900;margin-bottom:22px}.panel h2{font-size:clamp(44px,13vw,76px);line-height:.9;margin:0 0 24px}.panel p{color:var(--muted);font-size:20px;line-height:1.55}
+.access{margin-top:28px;padding:20px;border:1px solid var(--line);border-radius:22px;background:#10151c}
+input{width:100%;padding:17px;border:0;border-radius:16px;background:#fff;color:#111;text-align:center;font-size:18px;letter-spacing:.20em;text-transform:uppercase}
+button{width:100%;margin-top:12px;padding:17px;border:0;border-radius:16px;background:var(--red);color:#fff;font-weight:900;letter-spacing:.15em}
+.output{min-height:58px;margin-top:16px;color:var(--gold);font-size:18px;line-height:1.4}.log{font-family:monospace;text-align:left;color:#9da7b5;padding:18px;background:#06080c;border:1px solid var(--line);border-radius:16px;margin-top:18px;display:none;white-space:pre-line}
+.paths{display:none;padding:38px 20px 50px}.paths.active{display:block}.path-title{text-align:center;letter-spacing:.28em;color:#fff;margin-bottom:24px}
+.path-card{border:1px solid var(--line);border-radius:22px;background:#0b1017;overflow:hidden;margin:16px auto;max-width:520px}.path-card img{width:100%;height:150px;object-fit:cover;display:block;filter:brightness(.75) contrast(1.15)}.path-body{padding:20px}.path-body h3{margin:0;letter-spacing:.18em;font-size:24px}.path-body p{color:#aeb6c2}.keep{color:#ff4343}.lost{color:#4bd8d1}.hunted{color:#ff8a28}
+.footer{color:#7d8794;text-align:center;font-size:12px;letter-spacing:.18em;padding:28px 18px 50px}
 </style>
 </head>
 <body>
-<main class="stage">
-  <img class="poster" src="landing.png" alt="The Last Follower landing">
-  <div class="fade"></div>
-  <a class="signal" href="#signal">ENTER <span>THE SIGNAL</span></a>
-</main>
+<div class="noise"></div>
+<audio id="ambient" src="ambient.wav" loop preload="auto"></audio>
+<audio id="unlockSound" src="unlock.wav" preload="auto"></audio>
+<audio id="deniedSound" src="denied.wav" preload="auto"></audio>
+
+<section class="hero" id="hero">
+  <div class="topbar"><div>THE LAST FOLLOWER</div><div>MENU</div></div>
+  <div class="content">
+    <div class="time">02:17 AM</div>
+    <div class="status"><span>●</span> THE SIGNAL IS <span>REAL</span></div>
+    <h1 class="glitch" id="title" data-text="THE LAST FOLLOWER">THE<br>LAST<br>FOLLOWER</h1>
+    <div class="tagline">NOT A GAME. A <span>REALITY</span>.</div>
+    <button class="enter" id="enterBtn">ENTER THE SIGNAL</button>
+    <button class="sound" id="soundBtn">SOUND: OFF</button>
+    <div class="scroll">SCROLL TO DISCOVER</div>
+  </div>
+</section>
+
+<section class="panel" id="accessPanel">
+  <div class="panel-inner">
+    <div class="kicker">SIGNAL_01</div>
+    <h2>THREE SYMBOLS.<br>ONE TRUTH.</h2>
+    <p>You were not supposed to find it.</p>
+    <div class="access">
+      <input id="code" placeholder="ACCESS CODE">
+      <button id="unlockBtn">UNLOCK</button>
+      <div class="output" id="out"></div>
+      <div class="log" id="log"></div>
+    </div>
+  </div>
+</section>
+
+<section class="paths" id="paths">
+  <div class="path-title">SCEGLI IL TUO PERCORSO</div>
+  <div class="path-card"><img src="landing.png"><div class="path-body"><h3 class="keep">THE KEEPERS</h3><p>Il potere appartiene a chi conosce. Cerca la chiave.</p></div></div>
+  <div class="path-card"><img src="landing.png"><div class="path-body"><h3 class="lost">THE LOST</h3><p>La verità si perde nella nebbia. Cerca il libro.</p></div></div>
+  <div class="path-card"><img src="landing.png"><div class="path-body"><h3 class="hunted">THE HUNTED</h3><p>Sopravvivere è solo il primo passo. Cerca l’anello.</p></div></div>
+</section>
+
+<div class="footer">ACCESSO RISERVATO · THE SIGNAL REMEMBERS</div>
 
 <script>
-document.querySelector('.signal').addEventListener('click', function(e){
-  e.preventDefault();
-  document.body.innerHTML = `
-  <div style="min-height:100vh;background:#020406;color:white;font-family:Arial;padding:32px;display:flex;align-items:center;justify-content:center;text-align:center">
-    <div>
-      <div style="color:#ff3636;letter-spacing:.25em;font-weight:900;margin-bottom:20px">SIGNAL_01</div>
-      <h1 style="font-size:52px;line-height:.92;margin:0 0 20px">THREE SYMBOLS.<br>ONE TRUTH.</h1>
-      <p style="color:#b8bfca;font-size:20px;line-height:1.55">Una scatola. Tre simboli. Una scelta. Il primo accesso richiede un codice.</p>
-      <div style="margin-top:28px;padding:18px;border:1px solid rgba(255,255,255,.14);border-radius:18px;background:#10151c">
-        <input id="code" placeholder="ENTER ACCESS CODE" style="width:100%;padding:16px;border-radius:14px;border:0;font-size:16px;text-align:center;letter-spacing:.18em;background:#fff;color:#111">
-        <button onclick="checkCode()" style="width:100%;margin-top:12px;padding:16px;border-radius:14px;border:0;background:#ff3636;color:#fff;font-weight:900;letter-spacing:.12em">UNLOCK</button>
-        <div id="out" style="margin-top:14px;color:#e7c27b"></div>
-      </div>
-    </div>
-  </div>`;
+const title=document.getElementById("title");
+const ambient=document.getElementById("ambient");
+const unlockSound=document.getElementById("unlockSound");
+const deniedSound=document.getElementById("deniedSound");
+let soundOn=false;
+
+function startSound(){
+  soundOn=true;
+  ambient.volume=0.22;
+  ambient.play().catch(()=>{});
+  document.getElementById("soundBtn").textContent="SOUND: ON";
+}
+document.getElementById("soundBtn").addEventListener("click", startSound);
+
+setInterval(()=>{title.classList.add("active");setTimeout(()=>title.classList.remove("active"),240)},4200);
+
+document.getElementById("enterBtn").addEventListener("click",()=>{
+  startSound();
+  document.getElementById("accessPanel").classList.add("active");
+  document.getElementById("accessPanel").scrollIntoView({behavior:"smooth"});
 });
 
-function checkCode(){
-  const code = document.getElementById('code').value.trim().toUpperCase();
-  const out = document.getElementById('out');
-  if(code === 'SIGNAL01' || code === 'SIGNAL_01'){
-    out.innerHTML = 'ACCESS GRANTED. The first path is opening...';
-  } else {
-    out.innerHTML = 'ACCESS DENIED. The signal does not recognize you.';
+document.getElementById("unlockBtn").addEventListener("click", unlock);
+
+function unlock(){
+  const code=document.getElementById("code").value.trim().toUpperCase();
+  const out=document.getElementById("out");
+  const log=document.getElementById("log");
+  if(code!=="SIGNAL01" && code!=="SIGNAL_01"){
+    deniedSound.volume=.45; deniedSound.play().catch(()=>{});
+    out.innerHTML="ACCESS DENIED.";
+    log.style.display="block";
+    log.textContent="> signal rejected\\n> identity not recognized\\n> try again";
+    return;
   }
+  unlockSound.volume=.48; unlockSound.play().catch(()=>{});
+  out.innerHTML="DECRYPTING...";
+  log.style.display="block";
+  log.textContent="> signal accepted\\n> opening hidden layer\\n> locating three symbols";
+  setTimeout(()=>{log.textContent+="\\n> key fragment found"},700);
+  setTimeout(()=>{log.textContent+="\\n> book fragment found"},1300);
+  setTimeout(()=>{log.textContent+="\\n> ring fragment found"},1900);
+  setTimeout(()=>{
+    out.innerHTML="ACCESS GRANTED.";
+    log.textContent+="\\n> choose carefully";
+    document.getElementById("paths").classList.add("active");
+    document.getElementById("paths").scrollIntoView({behavior:"smooth"});
+  },2600);
 }
 </script>
 </body>
