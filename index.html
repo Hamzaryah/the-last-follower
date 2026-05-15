@@ -1,75 +1,205 @@
 <!doctype html>
-<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>THE LAST FOLLOWER</title><style>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>THE LAST FOLLOWER</title>
+<style>
 *{box-sizing:border-box}
 :root{--bg:#020406;--red:#ff3434;--gold:#e7c27b;--muted:#aeb6c2;--line:rgba(255,255,255,.14)}
 html,body{margin:0;background:var(--bg);color:#fff;font-family:Arial,Helvetica,sans-serif;overflow-x:hidden}
-body::before{content:"";position:fixed;inset:0;z-index:20;pointer-events:none;background:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px);background-size:100% 5px;mix-blend-mode:overlay;opacity:.18}
-.noise{position:fixed;inset:-20%;z-index:21;pointer-events:none;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:noiseMove 1.2s steps(2) infinite}
-@keyframes noiseMove{0%{transform:translate(0,0)}50%{transform:translate(-2%,1%)}100%{transform:translate(1%,-1%)}}
+.page{display:none;min-height:100vh;position:relative}
+.page.active{display:block}
 .hero{min-height:100vh;position:relative;display:flex;align-items:flex-end;justify-content:center;padding:22px 18px calc(36px + env(safe-area-inset-bottom));overflow:hidden}
-.hero::before{content:"";position:absolute;inset:0;background:url("landing.png") top center/cover no-repeat;opacity:.78;transform:scale(1.03)}
-.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 34%,rgba(255,255,255,.055),transparent 26%),linear-gradient(to bottom,rgba(2,4,6,.10),rgba(2,4,6,.58) 58%,#020406 100%)}
+.hero::before{content:"";position:absolute;inset:0;background:url("landing.png") top center/cover no-repeat;opacity:.80;transform:scale(1.035);animation:figureMove 7s ease-in-out infinite alternate}
+@keyframes figureMove{0%{transform:scale(1.035) translateX(-4px)}100%{transform:scale(1.055) translateX(5px)}}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 34%,rgba(255,255,255,.055),transparent 26%),linear-gradient(to bottom,rgba(2,4,6,.08),rgba(2,4,6,.60) 58%,#020406 100%)}
 .topbar{position:absolute;top:18px;left:18px;right:18px;z-index:2;display:flex;justify-content:space-between;align-items:center;letter-spacing:.28em;font-size:11px;color:#dce2ea}
 .content{position:relative;z-index:2;width:100%;max-width:560px;text-align:center;padding-top:38vh}
 .time{color:#e6edf6;letter-spacing:.25em;font-size:13px;margin-bottom:10px}
 .status{color:#fff;letter-spacing:.20em;font-size:12px;margin-bottom:40px}.status span{color:var(--red)}
 h1{margin:0;font-size:clamp(52px,17vw,96px);line-height:.86;letter-spacing:.02em;font-weight:900;text-shadow:0 0 22px rgba(255,255,255,.22);animation:breath 4.8s ease-in-out infinite}
-@keyframes breath{0%,100%{filter:brightness(1)}50%{filter:brightness(1.12)}}
-.glitch{position:relative}.glitch::before,.glitch::after{content:attr(data-text);position:absolute;inset:0;opacity:0;pointer-events:none}.glitch::before{color:#ff3333;transform:translate(2px,0)}.glitch::after{color:#3ee7ff;transform:translate(-2px,0)}
-.glitch.active::before,.glitch.active::after{opacity:.55;animation:glitchShift .22s steps(2) 1}
-@keyframes glitchShift{0%{clip-path:inset(0 0 80% 0)}33%{clip-path:inset(35% 0 40% 0)}66%{clip-path:inset(70% 0 0 0)}100%{clip-path:inset(0 0 0 0)}}
+@keyframes breath{0%,100%{filter:brightness(1)}50%{filter:brightness(1.10)}}
 .tagline{letter-spacing:.35em;color:#e9edf3;font-size:12px;margin:22px 0 28px}.tagline span{color:var(--red)}
 .enter,.button{display:block;width:100%;padding:18px 20px;border-radius:16px;border:1px solid rgba(255,52,52,.85);background:rgba(8,10,14,.72);color:#fff;font-weight:900;font-size:14px;letter-spacing:.22em;box-shadow:0 0 32px rgba(255,52,52,.25);backdrop-filter:blur(8px);text-decoration:none;text-align:center}
 .enter{animation:pulseRed 2.2s infinite}
 @keyframes pulseRed{0%,100%{box-shadow:0 0 22px rgba(255,52,52,.22)}50%{box-shadow:0 0 44px rgba(255,52,52,.45)}}
-.sound{margin-top:12px;background:transparent;border:0;color:#8d97a4;letter-spacing:.22em;font-size:10px;padding:10px;width:100%}
-.page{min-height:100vh;padding:34px 20px 40px;display:flex;align-items:center;justify-content:center;text-align:center}
+.full{min-height:100vh;padding:34px 20px 40px;display:flex;align-items:center;justify-content:center;text-align:center}
 .inner{max-width:560px;width:100%}
 .homebar{position:fixed;top:12px;left:12px;right:12px;z-index:50;display:flex;gap:10px;justify-content:space-between;align-items:center;pointer-events:none}
 .homebar a{pointer-events:auto;text-decoration:none;color:#fff;background:rgba(10,12,18,.64);border:1px solid var(--line);border-radius:999px;padding:10px 13px;font-size:12px;letter-spacing:.16em;backdrop-filter:blur(8px)}
 .kicker{color:var(--red);letter-spacing:.35em;font-weight:900;margin-bottom:22px}
-.page h2{font-size:clamp(44px,13vw,76px);line-height:.9;margin:0 0 24px}
-.page p{color:var(--muted);font-size:20px;line-height:1.55}
+.full h2{font-size:clamp(44px,13vw,76px);line-height:.9;margin:0 0 24px}
+.full p{color:var(--muted);font-size:20px;line-height:1.55}
 .access{margin-top:28px;padding:20px;border:1px solid var(--line);border-radius:22px;background:#10151c}
 input{width:100%;padding:17px;border:0;border-radius:16px;background:#fff;color:#111;text-align:center;font-size:18px;letter-spacing:.20em;text-transform:uppercase}
 button{width:100%;margin-top:12px;padding:17px;border:0;border-radius:16px;background:var(--red);color:#fff;font-weight:900;letter-spacing:.15em}
-.output{min-height:58px;margin-top:16px;color:var(--gold);font-size:18px;line-height:1.4}.log{font-family:monospace;text-align:left;color:#9da7b5;padding:18px;background:#06080c;border:1px solid var(--line);border-radius:16px;margin-top:18px;display:none;white-space:pre-line}
-.path-title{text-align:center;letter-spacing:.28em;color:#fff;margin-bottom:24px}
-.path-card{border:1px solid var(--line);border-radius:22px;background:#0b1017;overflow:hidden;margin:16px auto;max-width:520px;text-align:left}
-.path-card img{width:100%;height:170px;object-fit:cover;display:block;filter:brightness(.75) contrast(1.15)}
-.path-body{padding:22px}.path-body h3{margin:0;letter-spacing:.18em;font-size:27px}.path-body p{color:#aeb6c2;font-size:18px}.keep{color:#ff4343}.lost{color:#4bd8d1}.hunted{color:#ff8a28}
-.flash{position:fixed;inset:0;background:white;opacity:0;z-index:99;pointer-events:none}
-.flash.on{animation:flash .38s ease-out}
-@keyframes flash{0%{opacity:0}8%{opacity:.92}20%{opacity:.08}32%{opacity:.70}100%{opacity:0}}
+.output{min-height:58px;margin-top:16px;color:var(--gold);font-size:18px;line-height:1.4}
+.log{font-family:monospace;text-align:left;color:#9da7b5;padding:18px;background:#06080c;border:1px solid var(--line);border-radius:16px;margin-top:18px;display:none;white-space:pre-line}
+.path-title{text-align:center;letter-spacing:.28em;color:#fff;margin:0 0 24px;padding-top:76px}
+.path-card{position:relative;border:1px solid var(--line);border-radius:22px;background:#0b1017;overflow:hidden;margin:16px auto;max-width:520px;text-align:left}
+.path-card img{width:100%;height:170px;object-fit:cover;display:block;filter:brightness(.76) contrast(1.15)}
+.path-body{padding:22px}
+.path-body h3{margin:0;letter-spacing:.18em;font-size:27px}
+.path-body p{color:#aeb6c2;font-size:18px}
+.keep{color:#ff4343}.lost{color:#4bd8d1}.hunted{color:#ff8a28}
+.flash{position:fixed;inset:0;background:white;opacity:0;z-index:98;pointer-events:none}
+.flash.on{animation:flash .50s ease-out}
+@keyframes flash{0%{opacity:0}8%{opacity:.95}18%{opacity:.12}28%{opacity:.78}100%{opacity:0}}
+.lightningTree{position:fixed;inset:0;z-index:99;pointer-events:none;opacity:0}
+.lightningTree.on{animation:treeFade 1.05s ease-out}
+@keyframes treeFade{0%{opacity:0}5%{opacity:1}15%{opacity:.35}25%{opacity:1}55%{opacity:.58}100%{opacity:0}}
+.lightningTree svg{width:100%;height:100%;filter:drop-shadow(0 0 8px white) drop-shadow(0 0 18px #8be7ff) drop-shadow(0 0 36px #ffffff)}
+.lightningTree path{fill:none;stroke:white;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.lightningTree .branch{stroke-width:3}
 .footer{color:#7d8794;text-align:center;font-size:12px;letter-spacing:.18em;padding:28px 18px 50px}
-</style></head>
+</style>
+</head>
 <body>
-<div class="noise"></div>
-<audio id="ambient" src="rain_wind.wav" loop preload="auto"></audio>
+<div class="flash" id="flash"></div>
+<div class="lightningTree" id="lightningTree">
+<svg viewBox="0 0 390 900" preserveAspectRatio="none">
+<path d="M214 0 L176 104 L206 145 L158 242 L190 286 L142 388 L178 438 L126 575 L162 620 L106 900"/>
+<path class="branch" d="M206 145 L276 212 L241 258 L314 318"/>
+<path class="branch" d="M190 286 L110 345 L135 392 L70 462"/>
+<path class="branch" d="M178 438 L270 505 L235 548 L325 628"/>
+<path class="branch" d="M162 620 L88 690 L120 748 L52 835"/>
+<path class="branch" d="M142 388 L228 410 L255 470"/>
+</svg>
+</div>
+
+<audio id="wind" src="wind.wav" loop preload="auto"></audio>
 <audio id="signal" src="signal_click.wav" preload="auto"></audio>
-<section class="hero">
-  <div class="topbar"><div>THE LAST FOLLOWER</div><div>MENU</div></div>
-  <div class="content">
-    <div class="time">02:17 AM</div>
-    <div class="status"><span>●</span> THE SIGNAL IS <span>REAL</span></div>
-    <h1 class="glitch" id="title" data-text="THE LAST FOLLOWER">THE<br>LAST<br>FOLLOWER</h1>
-    <div class="tagline">NOT A GAME. A <span>REALITY</span>.</div>
-    <a class="enter" href="access.html" id="enterLink">ENTER THE SIGNAL</a>
-    <button class="sound" id="soundBtn">SOUND: OFF</button>
+<audio id="deniedSound" src="denied.wav" preload="auto"></audio>
+<audio id="thunder" src="thunder.wav" preload="auto"></audio>
+<audio id="lightning" src="lightning.wav" preload="auto"></audio>
+
+<section id="home" class="page active">
+  <div class="hero">
+    <div class="topbar"><div>THE LAST FOLLOWER</div><div>MENU</div></div>
+    <div class="content">
+      <div class="time">02:17 AM</div>
+      <div class="status"><span>●</span> THE SIGNAL IS <span>REAL</span></div>
+      <h1>THE<br>LAST<br>FOLLOWER</h1>
+      <div class="tagline">NOT A GAME. A <span>REALITY</span>.</div>
+      <button class="enter" id="enterBtn">ENTER THE SIGNAL</button>
+    </div>
   </div>
 </section>
+
+<section id="access" class="page">
+  <div class="homebar"><a href="#" onclick="goHome()">HOME</a><a href="#" onclick="showPage('paths')">PATHS</a></div>
+  <div class="full">
+    <div class="inner">
+      <div class="kicker">THE LAST FOLLOWER</div>
+      <h2>THREE SYMBOLS.<br>ONE TRUTH.</h2>
+      <p>You were not supposed to find it.</p>
+      <div class="access">
+        <input id="code" placeholder="ACCESS CODE">
+        <button id="unlockBtn">UNLOCK</button>
+        <div class="output" id="out"></div>
+        <div class="log" id="log"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="paths" class="page">
+  <div class="homebar"><a href="#" onclick="goHome()">HOME</a><a href="#" onclick="showPage('access')">BACK</a></div>
+  <div style="padding:0 20px 40px">
+    <div class="path-title">SCEGLI IL TUO PERCORSO</div>
+    <div class="path-card"><img src="landing.png"><div class="path-body"><h3 class="keep">THE KEEPERS</h3><p>Il potere appartiene a chi conosce. Cerca la chiave.</p><a class="button" href="#">CHOOSE THE KEY</a></div></div>
+    <div class="path-card"><img src="landing.png"><div class="path-body"><h3 class="lost">THE LOST</h3><p>La verità si perde nella nebbia. Cerca il libro.</p><a class="button" href="#">CHOOSE THE BOOK</a></div></div>
+    <div class="path-card"><img src="landing.png"><div class="path-body"><h3 class="hunted">THE HUNTED</h3><p>Sopravvivere è solo il primo passo. Cerca l’anello.</p><a class="button" href="#">CHOOSE THE RING</a></div></div>
+    <div class="footer">ACCESSO RISERVATO · THE SIGNAL REMEMBERS</div>
+  </div>
+</section>
+
 <script>
-const title=document.getElementById("title");
-setInterval(()=>{title.classList.add("active");setTimeout(()=>title.classList.remove("active"),240)},4200);
-function soundOn(){
- const a=document.getElementById("ambient"); a.volume=.26; a.play().catch(()=>{});
- document.getElementById("soundBtn").textContent="SOUND: ON";
+const wind=document.getElementById("wind");
+const signal=document.getElementById("signal");
+const denied=document.getElementById("deniedSound");
+const thunder=document.getElementById("thunder");
+const lightning=document.getElementById("lightning");
+
+function startWind(){
+  wind.volume=.34;
+  wind.play().catch(()=>{});
 }
-document.getElementById("soundBtn").addEventListener("click",soundOn);
-document.getElementById("enterLink").addEventListener("click",e=>{
- e.preventDefault(); soundOn();
- const s=document.getElementById("signal"); s.volume=.48; s.play().catch(()=>{});
- setTimeout(()=>{location.href="access.html"},650);
+function playSignal(){
+  signal.currentTime=0;
+  signal.volume=.50;
+  signal.play().catch(()=>{});
+}
+function showPage(id){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  window.scrollTo(0,0);
+}
+function goHome(){showPage("home")}
+
+function speakWelcome(){
+  if(!("speechSynthesis" in window)) return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance("Benvenuto in The Last Follower. Da questo momento, ogni scelta verrà ricordata.");
+  u.lang="it-IT";
+  u.rate=.68;
+  u.pitch=.38;
+  u.volume=1;
+  setTimeout(()=>speechSynthesis.speak(u),520);
+}
+
+document.getElementById("enterBtn").addEventListener("click",()=>{
+  startWind();
+  playSignal();
+  setTimeout(()=>{showPage("access"); speakWelcome();},680);
 });
+
+document.getElementById("unlockBtn").addEventListener("click",()=>{
+  const code=document.getElementById("code").value.trim().toUpperCase();
+  const out=document.getElementById("out");
+  const log=document.getElementById("log");
+  if(code!=="SIGNAL01" && code!=="SIGNAL_01"){
+    denied.currentTime=0; denied.volume=.42; denied.play().catch(()=>{});
+    out.innerHTML="ACCESS DENIED.";
+    log.style.display="block";
+    log.textContent="> signal rejected\\n> identity not recognized\\n> try again";
+    return;
+  }
+  playSignal();
+  out.innerHTML="DECRYPTING...";
+  log.style.display="block";
+  log.textContent="> signal accepted\\n> opening hidden layer\\n> locating three symbols";
+  setTimeout(()=>{log.textContent+="\\n> key fragment found"},700);
+  setTimeout(()=>{log.textContent+="\\n> book fragment found"},1300);
+  setTimeout(()=>{log.textContent+="\\n> ring fragment found"},1900);
+  setTimeout(()=>{
+    out.innerHTML="ACCESS GRANTED.";
+    log.textContent+="\\n> choose carefully";
+    setTimeout(()=>{showPage("paths"); startStorm();},700);
+  },2600);
+});
+
+function startStorm(){
+  setTimeout(()=>{
+    thunder.currentTime=0;
+    thunder.volume=1.0;
+    thunder.play().catch(()=>{});
+    if(navigator.vibrate) navigator.vibrate([260,80,320,120,560]);
+  },800);
+  setTimeout(()=>{
+    lightning.currentTime=0;
+    lightning.volume=.76;
+    lightning.play().catch(()=>{});
+    const flash=document.getElementById("flash");
+    const tree=document.getElementById("lightningTree");
+    flash.classList.add("on");
+    tree.classList.add("on");
+    setTimeout(()=>flash.classList.remove("on"),560);
+    setTimeout(()=>tree.classList.remove("on"),1200);
+    if(navigator.vibrate) navigator.vibrate([90,40,140]);
+  },3800);
+}
 </script>
-</body></html>
+</body>
+</html>
