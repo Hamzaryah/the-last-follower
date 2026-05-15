@@ -61,14 +61,15 @@ button{width:100%;margin-top:12px;padding:17px;border:0;border-radius:16px;backg
 <script>
 const title=document.getElementById("title");
 setInterval(()=>{title.classList.add("active");setTimeout(()=>title.classList.remove("active"),240)},4200);
-document.getElementById("soundBtn").addEventListener("click",()=>{
+function soundOn(){
  const a=document.getElementById("ambient"); a.volume=.26; a.play().catch(()=>{});
  document.getElementById("soundBtn").textContent="SOUND: ON";
-});
+}
+document.getElementById("soundBtn").addEventListener("click",soundOn);
 document.getElementById("enterLink").addEventListener("click",e=>{
- e.preventDefault();
+ e.preventDefault(); soundOn();
  const s=document.getElementById("signal"); s.volume=.48; s.play().catch(()=>{});
- setTimeout(()=>{location.href="access.html?voice=1"},650);
+ setTimeout(()=>{location.href="access.html"},650);
 });
 </script>
 </body></html>

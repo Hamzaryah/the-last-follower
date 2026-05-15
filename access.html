@@ -54,31 +54,32 @@ button{width:100%;margin-top:12px;padding:17px;border:0;border-radius:16px;backg
     <div class="kicker">SIGNAL_01</div>
     <h2>THREE SYMBOLS.<br>ONE TRUTH.</h2>
     <p>You were not supposed to find it.</p>
+    <button id="voiceBtn">RECEIVE TRANSMISSION</button>
     <div class="access">
       <input id="code" placeholder="ACCESS CODE">
       <button id="unlockBtn">UNLOCK</button>
       <div class="output" id="out"></div>
       <div class="log" id="log"></div>
     </div>
-    <button class="sound" id="soundBtn">SOUND: OFF</button>
   </div>
 </section>
 <script>
 const ambient=document.getElementById("ambient");
-function startAmb(){ambient.volume=.26;ambient.play().catch(()=>{});document.getElementById("soundBtn").textContent="SOUND: ON";}
-document.getElementById("soundBtn").addEventListener("click",startAmb);
-
+function startAmb(){ambient.volume=.26;ambient.play().catch(()=>{});}
 function speakWelcome(){
- if(!("speechSynthesis" in window)) return;
+ startAmb();
+ if(!("speechSynthesis" in window)){document.getElementById("out").innerHTML="TRANSMISSION READY.";return;}
+ speechSynthesis.cancel();
  const phrase="Benvenuto nel segnale. Da questo momento, ogni scelta verrà ricordata.";
  const u=new SpeechSynthesisUtterance(phrase);
- u.lang="it-IT"; u.rate=.82; u.pitch=.72; u.volume=.88;
- setTimeout(()=>speechSynthesis.speak(u),650);
+ u.lang="it-IT"; u.rate=.82; u.pitch=.72; u.volume=.95;
+ speechSynthesis.speak(u);
+ document.getElementById("voiceBtn").textContent="TRANSMISSION RECEIVED";
 }
-if(new URLSearchParams(location.search).get("voice")==="1"){ startAmb(); speakWelcome(); }
-
+document.getElementById("voiceBtn").addEventListener("click", speakWelcome);
 document.getElementById("unlockBtn").addEventListener("click", unlock);
 function unlock(){
+ startAmb();
  const code=document.getElementById("code").value.trim().toUpperCase();
  const out=document.getElementById("out");
  const log=document.getElementById("log");

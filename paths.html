@@ -52,6 +52,7 @@ button{width:100%;margin-top:12px;padding:17px;border:0;border-radius:16px;backg
 <section class="page" style="display:block;padding-top:76px">
   <div class="inner">
     <div class="path-title">SCEGLI IL TUO PERCORSO</div>
+    <button id="stormBtn">AWAKEN THE STORM</button>
     <div class="path-card"><img src="landing.png"><div class="path-body"><h3 class="keep">THE KEEPERS</h3><p>Il potere appartiene a chi conosce. Cerca la chiave.</p><a class="button" href="#">CHOOSE THE KEY</a></div></div>
     <div class="path-card"><img src="landing.png"><div class="path-body"><h3 class="lost">THE LOST</h3><p>La verità si perde nella nebbia. Cerca il libro.</p><a class="button" href="#">CHOOSE THE BOOK</a></div></div>
     <div class="path-card"><img src="landing.png"><div class="path-body"><h3 class="hunted">THE HUNTED</h3><p>Sopravvivere è solo il primo passo. Cerca l’anello.</p><a class="button" href="#">CHOOSE THE RING</a></div></div>
@@ -59,14 +60,11 @@ button{width:100%;margin-top:12px;padding:17px;border:0;border-radius:16px;backg
   </div>
 </section>
 <script>
-if(new URLSearchParams(location.search).get("storm")==="1"){
- setTimeout(()=>{
-   const t=document.getElementById("thunder"); t.volume=.70; t.play().catch(()=>{});
- },1700);
- setTimeout(()=>{
-   const l=document.getElementById("lightning"); l.volume=.62; l.play().catch(()=>{});
-   const f=document.getElementById("flash"); f.classList.add("on"); setTimeout(()=>f.classList.remove("on"),450);
- },4700);
+function storm(){
+ const btn=document.getElementById("stormBtn"); btn.textContent="STORM AWAKENED";
+ setTimeout(()=>{const t=document.getElementById("thunder"); t.volume=.76; t.play().catch(()=>{});},700);
+ setTimeout(()=>{const l=document.getElementById("lightning"); l.volume=.65; l.play().catch(()=>{}); const f=document.getElementById("flash"); f.classList.add("on"); setTimeout(()=>f.classList.remove("on"),450);},3600);
 }
+document.getElementById("stormBtn").addEventListener("click", storm);
 </script>
 </body></html>
