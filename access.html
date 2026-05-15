@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>THE LAST FOLLOWER</title><style>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>SIGNAL_01</title><style>
 *{box-sizing:border-box}
 :root{--bg:#020406;--red:#ff3434;--gold:#e7c27b;--muted:#aeb6c2;--line:rgba(255,255,255,.14)}
 html,body{margin:0;background:var(--bg);color:#fff;font-family:Arial,Helvetica,sans-serif;overflow-x:hidden}
@@ -42,24 +42,47 @@ button{width:100%;margin-top:12px;padding:17px;border:0;border-radius:16px;backg
 </style></head>
 <body>
 <div class="noise"></div>
+<div class="homebar"><a href="index.html">HOME</a><a href="paths.html">PATHS</a></div>
 <audio id="ambient" src="rain_wind.wav" loop preload="auto"></audio>
-<section class="hero">
-  <div class="topbar"><div>THE LAST FOLLOWER</div><div>MENU</div></div>
-  <div class="content">
-    <div class="time">02:17 AM</div>
-    <div class="status"><span>●</span> THE SIGNAL IS <span>REAL</span></div>
-    <h1 class="glitch" id="title" data-text="THE LAST FOLLOWER">THE<br>LAST<br>FOLLOWER</h1>
-    <div class="tagline">NOT A GAME. A <span>REALITY</span>.</div>
-    <a class="enter" href="access.html">ENTER THE SIGNAL</a>
+<audio id="unlockSound" src="unlock.wav" preload="auto"></audio>
+<audio id="deniedSound" src="denied.wav" preload="auto"></audio>
+<section class="page">
+  <div class="inner">
+    <div class="kicker">SIGNAL_01</div>
+    <h2>THREE SYMBOLS.<br>ONE TRUTH.</h2>
+    <p>You were not supposed to find it.</p>
+    <div class="access">
+      <input id="code" placeholder="ACCESS CODE">
+      <button id="unlockBtn">UNLOCK</button>
+      <div class="output" id="out"></div>
+      <div class="log" id="log"></div>
+    </div>
     <button class="sound" id="soundBtn">SOUND: OFF</button>
   </div>
 </section>
 <script>
-const title=document.getElementById("title");
-setInterval(()=>{title.classList.add("active");setTimeout(()=>title.classList.remove("active"),240)},4200);
-document.getElementById("soundBtn").addEventListener("click",()=>{
- const a=document.getElementById("ambient"); a.volume=.30; a.play().catch(()=>{});
- document.getElementById("soundBtn").textContent="SOUND: ON";
-});
+const ambient=document.getElementById("ambient");
+document.getElementById("soundBtn").addEventListener("click",()=>{ambient.volume=.30;ambient.play().catch(()=>{});document.getElementById("soundBtn").textContent="SOUND: ON";});
+document.getElementById("unlockBtn").addEventListener("click", unlock);
+function unlock(){
+ const code=document.getElementById("code").value.trim().toUpperCase();
+ const out=document.getElementById("out");
+ const log=document.getElementById("log");
+ if(code!=="SIGNAL01" && code!=="SIGNAL_01"){
+   document.getElementById("deniedSound").volume=.42;document.getElementById("deniedSound").play().catch(()=>{});
+   out.innerHTML="ACCESS DENIED.";
+   log.style.display="block";
+   log.textContent="> signal rejected\n> identity not recognized\n> try again";
+   return;
+ }
+ document.getElementById("unlockSound").volume=.45;document.getElementById("unlockSound").play().catch(()=>{});
+ out.innerHTML="DECRYPTING...";
+ log.style.display="block";
+ log.textContent="> signal accepted\n> opening hidden layer\n> locating three symbols";
+ setTimeout(()=>{log.textContent+="\n> key fragment found"},700);
+ setTimeout(()=>{log.textContent+="\n> book fragment found"},1300);
+ setTimeout(()=>{log.textContent+="\n> ring fragment found"},1900);
+ setTimeout(()=>{out.innerHTML="ACCESS GRANTED.";log.textContent+="\n> choose carefully"; setTimeout(()=>location.href="paths.html",700);},2600);
+}
 </script>
 </body></html>
