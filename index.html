@@ -1,1 +1,49 @@
-<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>THE LAST FOLLOWER</title></head><body style='background:#05070b;color:white;font-family:Arial;padding:40px;text-align:center'><h1 style='font-size:72px'>THE LAST FOLLOWER</h1><p style='max-width:700px;margin:auto;font-size:22px;color:#c2c8d0'>A psychological social thriller experience.</p><button style='margin-top:30px;padding:18px 28px;border-radius:16px;background:#e6c17b;border:0;font-weight:800'>ENTER THE SIGNAL</button></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>THE LAST FOLLOWER</title>
+<style>
+html,body{
+margin:0;
+padding:0;
+background:#000;
+height:100%;
+overflow:hidden;
+font-family:Arial,sans-serif;
+}
+.hero{
+position:relative;
+width:100%;
+height:100vh;
+background:url('landing.png') center center / cover no-repeat;
+}
+.overlay{
+position:absolute;
+inset:0;
+background:linear-gradient(to bottom, rgba(0,0,0,.15), rgba(0,0,0,.35));
+}
+.enter{
+position:absolute;
+left:50%;
+transform:translateX(-50%);
+bottom:7%;
+padding:18px 36px;
+border-radius:18px;
+background:rgba(0,0,0,.55);
+border:1px solid rgba(255,255,255,.18);
+color:#fff;
+font-size:20px;
+font-weight:800;
+backdrop-filter:blur(8px);
+}
+</style>
+</head>
+<body>
+<div class="hero">
+<div class="overlay"></div>
+<div class="enter">SIGNAL CONNECTED</div>
+</div>
+</body>
+</html>
